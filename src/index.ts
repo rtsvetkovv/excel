@@ -1,4 +1,7 @@
-import './scss/index.scss';
-import { test } from 'core';
+import "./scss/index.scss";
+import { Excel } from "components/excel/Excel";
 
-test();
+const excel = new Excel("#app", {
+  components: [],
+});
+console.log(excel);
