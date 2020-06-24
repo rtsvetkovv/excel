@@ -1,3 +1,3 @@
-export class DomListener {
+export abstract class DomListener {
 
 }

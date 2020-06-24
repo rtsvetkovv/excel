@@ -59,6 +59,7 @@ const config = {
   resolve: {
     extensions: ['.ts', '.js'],
     alias: {
+      components: path.resolve(__dirname, './src/components'),
       core: path.resolve(__dirname, './src/core'),
     },
   },
