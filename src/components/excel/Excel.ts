@@ -1,29 +1,36 @@
-import { ExcelComponent } from "core/ExcelComponent";
+import { ExcelComponent } from 'core/ExcelComponent';
+import { $ } from 'core/dom';
 
-interface ExcelOptions {
-  components: Array<typeof ExcelComponent>;
+type ComponentType = typeof ExcelComponent & { className: string };
+
+interface IExcelOptions {
+  components: Array<ComponentType>;
 }
 
 export class Excel {
   private $el: HTMLElement | null;
-  private components: Array<typeof ExcelComponent>;
+  private components: Array<ComponentType>;
 
-  constructor(selector: string, options: ExcelOptions) {
+  constructor(selector: string, options: IExcelOptions) {
     this.$el = document.querySelector(selector);
     this.components = options.components || [];
   }
 
   private getRoot() {
-    const $root = document.createElement("div");
+    const $root = $.create('div', 'excel');
+
     this.components.forEach((Component) => {
-      const component = new Component();
-      $root.insertAdjacentHTML("beforeend", component.toHTML());
+      const $el = $.create('div', Component.className);
+
+      const component = new Component($el);
+      $el.innerHTML = component.toHTML();
+      $root.append($el);
     });
 
     return $root;
   }
 
-  render() {
+  public render() {
     this.$el?.append(this.getRoot());
   }
 }
