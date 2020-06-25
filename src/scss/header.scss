@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .excel__header {
   position: absolute;
@@ -35,5 +35,4 @@
   .button {
     @include button(red);
   }
-
 }

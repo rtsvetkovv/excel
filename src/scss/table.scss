@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .excel__table {
   position: absolute;
@@ -56,12 +56,10 @@
     white-space: nowrap;
     outline: none;
 
-
     &.selected {
       border: none;
       outline: 2px solid #3c74ff;
       z-index: 2;
     }
   }
-
 }

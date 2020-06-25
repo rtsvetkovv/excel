@@ -1,8 +1,7 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .db {
-
   &__header {
     position: fixed;
     left: 0;
@@ -90,5 +89,4 @@
       }
     }
   }
-
 }

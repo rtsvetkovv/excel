@@ -3,13 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "excel, typescript"
+  ],
+  "author": "Roman Tsvetkov",
   "license": "ISC",
   "scripts": {
     "clean": "rm dist/*",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --mode production"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write ."
+    }
   },
   "dependencies": {
     "normalize.css": "^8.0.1"
@@ -23,6 +30,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",

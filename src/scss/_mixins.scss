@@ -5,13 +5,14 @@
   text-align: center;
   position: relative;
   display: inline-block;
-  color: rgba(0, 0, 0, .7);
+  color: rgba(0, 0, 0, 0.7);
 
   & i {
     font-size: 18px;
   }
 
-  &:active, &.active {
+  &:active,
+  &.active {
     color: $color;
   }
 
@@ -20,7 +21,6 @@
     cursor: pointer;
   }
 }
-
 
 @mixin clear-list() {
   list-style: none;
