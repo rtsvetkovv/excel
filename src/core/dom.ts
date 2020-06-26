@@ -1,7 +1,50 @@
-class Dom {}
+export type SelectorType = Element | string;
+export type DomType = Dom;
 
-export function $() {
-  return new Dom();
+class Dom {
+  private $el: Element;
+
+  constructor(selector: SelectorType) {
+    if (typeof selector === 'string') {
+      const element = document.querySelector(selector);
+
+      if (element) {
+        this.$el = element;
+      } else {
+        throw new Error(`Element by selector "${selector}" is not founded`);
+      }
+    } else {
+      this.$el = selector;
+    }
+  }
+
+  html(html: SelectorType) {
+    if (typeof html === 'string') {
+      this.$el.innerHTML = html;
+
+      return this;
+    }
+
+    return this.$el.outerHTML.trim();
+  }
+
+  clear() {
+    this.html('');
+    return this;
+  }
+
+  append(node: Dom | Element) {
+    if (node instanceof Dom) {
+      node = node.$el;
+    }
+    this.$el.append(node);
+
+    return this;
+  }
+}
+
+export function $(selector: SelectorType) {
+  return new Dom(selector);
 }
 $.create = (tagName: keyof HTMLElementTagNameMap, classes = '') => {
   const el = document.createElement(tagName);
@@ -9,5 +52,5 @@ $.create = (tagName: keyof HTMLElementTagNameMap, classes = '') => {
     el.classList.add(classes);
   }
 
-  return el;
+  return $(el);
 };

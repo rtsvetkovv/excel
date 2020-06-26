@@ -1,19 +1,19 @@
 import { ExcelComponent } from 'core/ExcelComponent';
-import { $ } from 'core/dom';
+import { $, DomType, SelectorType } from 'core/dom';
 
 type ComponentType = typeof ExcelComponent & { className: string };
 
-interface IExcelOptions {
+type ExcelOptions = {
   components: Array<ComponentType>;
-}
+};
 
 export class Excel {
-  private $el: HTMLElement | null;
-  private components: Array<ComponentType>;
+  private $el: DomType;
+  private components: Array<ComponentType> = [];
 
-  constructor(selector: string, options: IExcelOptions) {
-    this.$el = document.querySelector(selector);
-    this.components = options.components || [];
+  constructor(selector: SelectorType, options: ExcelOptions) {
+    this.$el = $(selector);
+    this.components = options.components;
   }
 
   private getRoot() {
@@ -23,7 +23,7 @@ export class Excel {
       const $el = $.create('div', Component.className);
 
       const component = new Component($el);
-      $el.innerHTML = component.toHTML();
+      $el.html(component.toHTML());
       $root.append($el);
     });
 

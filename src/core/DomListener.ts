@@ -1,7 +1,9 @@
-export abstract class DomListener {
-  $root: HTMLElement;
+import { DomType } from 'core/dom';
 
-  constructor($root: HTMLElement) {
+export abstract class DomListener {
+  $root: DomType;
+
+  constructor($root: DomType) {
     if (!$root) {
       throw new Error('No root provided for DomListener');
     }
