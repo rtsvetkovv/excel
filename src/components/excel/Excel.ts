@@ -1,7 +1,6 @@
-import { ExcelComponent } from 'core/ExcelComponent';
 import { $, DomType, SelectorType } from 'core/dom';
 
-type ComponentType = typeof ExcelComponent & { className: string };
+type ComponentType = any; // typeof ExcelComponent & { className: string };
 
 type ExcelOptions = {
   components: Array<ComponentType>;
@@ -19,12 +18,14 @@ export class Excel {
   private getRoot() {
     const $root = $.create('div', 'excel');
 
-    this.components.forEach((Component) => {
+    this.components = this.components.map((Component) => {
       const $el = $.create('div', Component.className);
 
       const component = new Component($el);
       $el.html(component.toHTML());
       $root.append($el);
+
+      return component;
     });
 
     return $root;
@@ -32,5 +33,7 @@ export class Excel {
 
   public render() {
     this.$el?.append(this.getRoot());
+
+    this.components.forEach((component) => component.init());
   }
 }
