@@ -41,6 +41,10 @@ class Dom {
 
     return this;
   }
+
+  on(eventType: string, callback: EventListenerOrEventListenerObject) {
+    this.$el.addEventListener(eventType, callback);
+  }
 }
 
 export function $(selector: SelectorType) {

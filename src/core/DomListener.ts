@@ -1,8 +1,10 @@
 import { DomType } from 'core/dom';
+import { capitalize } from 'core/utils';
 
-export abstract class DomListener {
-  $root: DomType;
-  private listeners = [];
+export class DomListener {
+  public $root: DomType;
+  public name: string = '';
+  private listeners: Array<string> = [];
 
   constructor($root: DomType, listeners = []) {
     if (!$root) {
@@ -13,9 +15,20 @@ export abstract class DomListener {
   }
 
   initDOMListeners() {
-    console.log(this.listeners);
+    this.listeners.forEach((eventName) => {
+      const method = getMethodName(eventName);
+      // @ts-ignore
+      if (!this[method]) {
+        throw new Error(
+          `Method ${method} is not implemented in ${this.name} component`
+        );
+      }
+      // @ts-ignore
+      this.$root.on(eventName, this[method]?.bind(this));
+    });
   }
 
-  removeDOMListeners() {
-  }
+  removeDOMListeners() {}
 }
+
+const getMethodName = (eventName: string) => 'on' + capitalize(eventName);
