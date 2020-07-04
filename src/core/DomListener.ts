@@ -15,20 +15,29 @@ export class DomListener {
   }
 
   initDOMListeners() {
+    console.log('HEre');
     this.listeners.forEach((eventName) => {
       const method = getMethodName(eventName);
-      // @ts-ignore
-      if (!this[method]) {
+      const listener = (this as any)[method];
+
+      if (!listener) {
         throw new Error(
           `Method ${method} is not implemented in ${this.name} component`
         );
       }
-      // @ts-ignore
-      this.$root.on(eventName, this[method]?.bind(this));
+
+      this.$root.on(eventName, listener.bind(this));
     });
   }
 
-  removeDOMListeners() {}
+  removeDOMListeners() {
+    this.listeners.forEach((eventName) => {
+      const method = getMethodName(eventName);
+      const listener = (this as any)[method];
+
+      this.$root.clear(eventName, listener);
+    });
+  }
 }
 
 const getMethodName = (eventName: string) => 'on' + capitalize(eventName);

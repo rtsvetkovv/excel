@@ -28,8 +28,9 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
-  clear() {
+  clear(eventType: string, callback: EventListenerOrEventListenerObject) {
     this.html('');
+    this.$el.removeEventListener(eventType, callback);
     return this;
   }
 
@@ -50,6 +51,7 @@ class Dom {
 export function $(selector: SelectorType) {
   return new Dom(selector);
 }
+
 $.create = (tagName: keyof HTMLElementTagNameMap, classes = '') => {
   const el = document.createElement(tagName);
   if (classes) {
