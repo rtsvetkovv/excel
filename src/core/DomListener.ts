@@ -6,7 +6,7 @@ export class DomListener {
   public name: string = '';
   private listeners: Array<string> = [];
 
-  constructor($root: DomType, listeners = []) {
+  constructor($root: DomType, listeners: Array<string> = []) {
     if (!$root) {
       throw new Error('No root provided for DomListener');
     }
@@ -15,10 +15,11 @@ export class DomListener {
   }
 
   initDOMListeners() {
-    console.log('HEre');
     this.listeners.forEach((eventName) => {
       const method = getMethodName(eventName);
-      const listener = (this as any)[method];
+      const listener = ((this as any)[method] = (this as any)[method].bind(
+        this
+      ));
 
       if (!listener) {
         throw new Error(
@@ -26,7 +27,7 @@ export class DomListener {
         );
       }
 
-      this.$root.on(eventName, listener.bind(this));
+      this.$root.on(eventName, listener);
     });
   }
 
@@ -35,7 +36,7 @@ export class DomListener {
       const method = getMethodName(eventName);
       const listener = (this as any)[method];
 
-      this.$root.clear(eventName, listener);
+      this.$root.of(eventName, listener);
     });
   }
 }

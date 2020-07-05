@@ -28,9 +28,8 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
-  clear(eventType: string, callback: EventListenerOrEventListenerObject) {
+  clear() {
     this.html('');
-    this.$el.removeEventListener(eventType, callback);
     return this;
   }
 
@@ -45,6 +44,10 @@ class Dom {
 
   on(eventType: string, callback: EventListenerOrEventListenerObject) {
     this.$el.addEventListener(eventType, callback);
+  }
+
+  of(eventType: string, callback: EventListenerOrEventListenerObject) {
+    this.$el.removeEventListener(eventType, callback);
   }
 }
 
