@@ -11,16 +11,25 @@ function toCell() {
 
 function toColumn(element: string) {
   return `
-    <div class="column">${element}</div>
+    <div class="column">
+      ${element}
+      <div class="column-resize" data-resize="col"></div>
+    </div>
   `;
 }
 
 function createRow(content: string, index?: number) {
-  const rowCount = index ?? '';
+  const rowIndex = index ?? '';
+  const resize = index
+    ? '<div class="row-resize" data-resize="row"></div>'
+    : '';
 
   return `
     <div class="row">
-      <div class="row-info">${rowCount}</div>
+      <div class="row-info">
+        ${rowIndex}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;
