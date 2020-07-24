@@ -20,7 +20,7 @@ const config = {
   devServer: {
     open: true,
     stats: 'minimal',
-    port: 3000,
+    port: 5000,
     overlay: true,
   },
   module: {

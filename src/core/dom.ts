@@ -2,7 +2,7 @@ export type SelectorType = Element | string;
 export type DomType = Dom;
 
 class Dom {
-  private $el: Element;
+  private $el: Element | HTMLElement;
 
   constructor(selector: SelectorType) {
     if (typeof selector === 'string') {
@@ -16,6 +16,10 @@ class Dom {
     } else {
       this.$el = selector;
     }
+  }
+
+  get element() {
+    return this.$el;
   }
 
   html(html: SelectorType) {
@@ -40,6 +44,17 @@ class Dom {
     this.$el.append(node);
 
     return this;
+  }
+
+  closest(selector: string) {
+    const $closest = this.$el.closest(selector);
+    if (!$closest) return null;
+
+    return $($closest);
+  }
+
+  getCoordinates() {
+    return this.$el.getBoundingClientRect();
   }
 
   on(eventType: string, callback: EventListenerOrEventListenerObject) {

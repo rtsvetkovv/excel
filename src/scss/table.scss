@@ -29,6 +29,7 @@
   }
 
   .row-info {
+    user-select: none;
     position: relative;
     display: flex;
     justify-content: center;
@@ -56,6 +57,7 @@
   }
 
   .column {
+    user-select: none;
     position: relative;
     display: flex;
     justify-content: center;
@@ -90,6 +92,7 @@
     color: #111;
     white-space: nowrap;
     outline: none;
+    overflow: auto;
 
     &.selected {
       border: none;

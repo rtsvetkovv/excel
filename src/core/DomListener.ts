@@ -16,16 +16,14 @@ export class DomListener {
 
   initDOMListeners() {
     this.listeners.forEach((eventName) => {
-      const method = getMethodName(eventName);
-      const listener = ((this as any)[method] = (this as any)[method].bind(
-        this
-      ));
-
-      if (!listener) {
+      const methodName = getMethodName(eventName);
+      let method = (this as any)[methodName];
+      if (!method) {
         throw new Error(
-          `Method ${method} is not implemented in ${this.name} component`
+          `Method ${methodName} is not implemented in ${this.name} component`
         );
       }
+      const listener = (method = (this as any)[methodName].bind(this));
 
       this.$root.on(eventName, listener);
     });
@@ -33,8 +31,8 @@ export class DomListener {
 
   removeDOMListeners() {
     this.listeners.forEach((eventName) => {
-      const method = getMethodName(eventName);
-      const listener = (this as any)[method];
+      const methodName = getMethodName(eventName);
+      const listener = (this as any)[methodName];
 
       this.$root.of(eventName, listener);
     });

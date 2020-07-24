@@ -3,7 +3,7 @@ const CODES = {
   Z: 90,
 };
 
-function toCell() {
+function toCell(_: string) {
   return `
     <div class="cell" contenteditable></div>
   `;
@@ -11,7 +11,7 @@ function toCell() {
 
 function toColumn(element: string) {
   return `
-    <div class="column">
+    <div class="column" data-type="resizable" >
       ${element}
       <div class="column-resize" data-resize="col"></div>
     </div>
