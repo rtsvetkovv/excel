@@ -57,6 +57,22 @@ class Dom {
     return this.$el.getBoundingClientRect();
   }
 
+  findAll(selector: string) {
+    return this.$el.querySelectorAll(selector);
+  }
+
+  get data() {
+    if (!(this.$el instanceof HTMLElement)) return;
+
+    return this.$el.dataset;
+  }
+
+  css(styles: { [key: string]: string }) {
+    if (!(this.$el instanceof HTMLElement)) return;
+
+    Object.assign(this.$el.style, styles);
+  }
+
   on(eventType: string, callback: EventListenerOrEventListenerObject) {
     this.$el.addEventListener(eventType, callback);
   }

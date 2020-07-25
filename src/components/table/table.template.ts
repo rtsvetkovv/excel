@@ -3,15 +3,15 @@ const CODES = {
   Z: 90,
 };
 
-function toCell(_: string) {
+function toCell(_: string, index: number) {
   return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" contenteditable data-collindex="${index}"></div>
   `;
 }
 
-function toColumn(element: string) {
+function toColumn(element: string, index: number) {
   return `
-    <div class="column" data-type="resizable" >
+    <div class="column" data-type="resizable" data-index="${index}">
       ${element}
       <div class="column-resize" data-resize="col"></div>
     </div>
@@ -20,12 +20,10 @@ function toColumn(element: string) {
 
 function createRow(content: string, index?: number) {
   const rowIndex = index ?? '';
-  const resize = index
-    ? '<div class="row-resize" data-resize="row"></div>'
-    : '';
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
 
   return `
-    <div class="row">
+    <div class="row" data-type="resizable">
       <div class="row-info">
         ${rowIndex}
         ${resize}
