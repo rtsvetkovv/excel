@@ -67,7 +67,7 @@ class Dom {
     return this.$el.dataset;
   }
 
-  css(styles: { [key: string]: string }) {
+  css(styles: { [key: string]: string | number }) {
     if (!(this.$el instanceof HTMLElement)) return;
 
     Object.assign(this.$el.style, styles);
