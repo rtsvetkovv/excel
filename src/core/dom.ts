@@ -57,8 +57,23 @@ class Dom {
     return this.$el.getBoundingClientRect();
   }
 
+  find(selector: string) {
+    const element = this.$el.querySelector(selector);
+    if (!element) return null;
+
+    return $(element);
+  }
+
   findAll(selector: string) {
     return this.$el.querySelectorAll(selector);
+  }
+
+  addClass(className: string) {
+    this.$el.classList.add(className);
+  }
+
+  removeClass(className: string) {
+    this.$el.classList.remove(className);
   }
 
   get data() {
