@@ -42,12 +42,11 @@ export class Table extends ExcelComponent {
   onClick(event: MouseEvent) {
     if (!(event.target instanceof HTMLElement)) return;
 
-    const coords = $(event.target).data?.coords;
-
-    if (!coords) return;
-
-    const $cell = this.$root.find(`[data-coords="${coords}"]`);
+    const $cell = $(event.target);
     if (!$cell) return;
+
+    const isEditableCell = $cell.data?.coords;
+    if (!isEditableCell) return;
 
     this.selection?.select($cell);
   }
