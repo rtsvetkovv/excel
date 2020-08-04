@@ -2,8 +2,13 @@ import { DomType, $ } from 'core/dom';
 import { ExcelComponent } from 'core/ExcelComponent';
 import { createTable } from './table.template';
 import { handleResize } from './table.resize';
-import { shouldResize } from './table.functions';
+import { shouldResize, matrix } from './table.functions';
 import { TableSelection } from './TableSelection';
+
+export type Coordinates = {
+  col: number;
+  row: number;
+};
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -43,11 +48,21 @@ export class Table extends ExcelComponent {
     if (!(event.target instanceof HTMLElement)) return;
 
     const $cell = $(event.target);
-    if (!$cell) return;
 
     const isEditableCell = $cell.data?.coords;
     if (!isEditableCell) return;
 
-    this.selection?.select($cell);
+    if (event.shiftKey) {
+      const targetCoordinates = $(event.target).coords(true) as Coordinates;
+      const currentCoordinates = this.selection?.current?.coords(true) as Coordinates;
+
+      const $cells = matrix(targetCoordinates, currentCoordinates).map((coordinate) =>
+        this.$root.find(`[data-coords="${coordinate}"]`)
+      ) as Array<DomType>;
+
+      this.selection?.selectGroup($cells);
+    } else {
+      this.selection?.select($cell);
+    }
   }
 }

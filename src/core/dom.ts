@@ -76,6 +76,21 @@ class Dom {
     this.$el.classList.remove(className);
   }
 
+  coords(parse?: boolean) {
+    if (parse) {
+      const [row, col] = this.coords()?.toString().split(':') as Array<string>;
+
+      return {
+        row: Number(row),
+        col: Number(col),
+      };
+    }
+
+    if (!this.data) return;
+
+    return this.data.coords;
+  }
+
   get data() {
     if (!(this.$el instanceof HTMLElement)) return;
 
