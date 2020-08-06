@@ -8,7 +8,7 @@ export class TableSelection {
     this.clear();
     this.group.push($element);
     this.current = $element;
-    $element.addClass(TableSelection.className);
+    $element.focus()!.addClass(TableSelection.className);
   }
 
   selectGroup(group: Array<DomType> = []) {

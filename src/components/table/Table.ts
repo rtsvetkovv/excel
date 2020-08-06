@@ -2,7 +2,7 @@ import { DomType, $ } from 'core/dom';
 import { ExcelComponent } from 'core/ExcelComponent';
 import { createTable } from './table.template';
 import { handleResize } from './table.resize';
-import { shouldResize, matrix } from './table.functions';
+import { shouldResize, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 
 export type Coordinates = {
@@ -17,7 +17,7 @@ export class Table extends ExcelComponent {
   constructor($root: DomType) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'click'],
+      listeners: ['mousedown', 'click', 'keydown'],
     });
   }
 
@@ -63,6 +63,20 @@ export class Table extends ExcelComponent {
       this.selection?.selectGroup($cells);
     } else {
       this.selection?.select($cell);
+    }
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp'];
+
+    const { key, shiftKey } = event;
+
+    if (keys.includes(key) && !shiftKey) {
+      event.preventDefault();
+
+      const coordinates = this.selection?.current?.coords(true) as Coordinates;
+      const $next = this.$root.find(nextSelector(key, coordinates))!;
+      this.selection?.select($next);
     }
   }
 }
