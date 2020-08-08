@@ -1,7 +1,15 @@
 import { ExcelComponent } from 'core/ExcelComponent';
+import { DomType } from 'core/dom';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header';
+
+  constructor($root: DomType, options: any) {
+    super($root, {
+      name: 'Header',
+      ...options,
+    });
+  }
 
   toHTML() {
     return `

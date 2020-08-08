@@ -4,10 +4,11 @@ import { DomType } from 'core/dom';
 export class Formula extends ExcelComponent {
   static className = 'excel__formula';
 
-  constructor($root: DomType) {
+  constructor($root: DomType, options: any) {
     super($root, {
       name: 'Formula',
-      listeners: ['input', 'click'],
+      listeners: ['input'],
+      ...options,
     });
   }
 
@@ -18,11 +19,8 @@ export class Formula extends ExcelComponent {
     `;
   }
 
-  onInput(e: Event) {
-    console.log('Formula on input: ', e);
-  }
-
-  onClick() {
-    console.log('Formula on click');
+  onInput(e: KeyboardEvent) {
+    const text = (e.target as HTMLElement).textContent!.trim();
+    this.emitter?.emit('working', text);
   }
 }

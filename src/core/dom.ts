@@ -32,6 +32,10 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  text(text: string) {
+    this.$el.textContent = text;
+  }
+
   clear() {
     this.html('');
     return this;

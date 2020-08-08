@@ -14,10 +14,11 @@ export class Table extends ExcelComponent {
   static className = 'excel__table';
   selection?: TableSelection;
 
-  constructor($root: DomType) {
+  constructor($root: DomType, options: any) {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'click', 'keydown'],
+      ...options,
     });
   }
 
@@ -32,6 +33,10 @@ export class Table extends ExcelComponent {
     if (!$cell) return;
 
     this.selection?.select($cell);
+
+    this.emitter?.subscribe('working', (data: any) => {
+      this.selection?.current?.text(data);
+    });
   }
 
   toHTML() {

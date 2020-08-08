@@ -11,12 +11,11 @@
   "scripts": {
     "clean": "rm dist/*",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack --mode production"
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "prettier": "prettier --write src"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write src/"
-    }
+    "hooks": {}
   },
   "dependencies": {
     "normalize.css": "^8.0.1"
