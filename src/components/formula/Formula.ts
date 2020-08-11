@@ -21,6 +21,6 @@ export class Formula extends ExcelComponent {
 
   onInput(e: KeyboardEvent) {
     const text = (e.target as HTMLElement).textContent!.trim();
-    this.emitter?.emit('working', text);
+    this.$emit('formula:input', text);
   }
 }

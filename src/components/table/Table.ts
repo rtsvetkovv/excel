@@ -34,7 +34,7 @@ export class Table extends ExcelComponent {
 
     this.selection?.select($cell);
 
-    this.emitter?.subscribe('working', (data: any) => {
+    this.$on('formula:input', (data: any) => {
       this.selection?.current?.text(data);
     });
   }
