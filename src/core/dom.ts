@@ -32,8 +32,16 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
-  text(text: string) {
-    this.$el.textContent = text;
+  text(text?: string) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text;
+    }
+
+    if (this.$el instanceof HTMLInputElement) {
+      return this.$el.value.trim();
+    }
+
+    return this.$el.textContent?.trim() ?? '';
   }
 
   clear() {
@@ -74,10 +82,14 @@ class Dom {
 
   addClass(className: string) {
     this.$el.classList.add(className);
+
+    return this;
   }
 
   removeClass(className: string) {
     this.$el.classList.remove(className);
+
+    return this;
   }
 
   focus() {

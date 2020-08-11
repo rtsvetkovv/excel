@@ -17,7 +17,7 @@ export class Table extends ExcelComponent {
   constructor($root: DomType, options: any) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'click', 'keydown'],
+      listeners: ['mousedown', 'click', 'keydown', 'input'],
       ...options,
     });
   }
@@ -32,10 +32,14 @@ export class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-coords="0:0"]');
     if (!$cell) return;
 
-    this.selection?.select($cell);
+    this.selectCell($cell);
 
     this.$on('formula:input', (data: any) => {
       this.selection?.current?.text(data);
+    });
+
+    this.$on('formula:done', () => {
+      this.selection?.current?.focus();
     });
   }
 
@@ -47,6 +51,8 @@ export class Table extends ExcelComponent {
     if (shouldResize(event)) {
       handleResize(this.$root, event);
     }
+
+    this.$emit('table:select', $(event.target as HTMLElement));
   }
 
   onClick(event: MouseEvent) {
@@ -81,7 +87,16 @@ export class Table extends ExcelComponent {
 
       const coordinates = this.selection?.current?.coords(true) as Coordinates;
       const $next = this.$root.find(nextSelector(key, coordinates))!;
-      this.selection?.select($next);
+      this.selectCell($next);
     }
+  }
+
+  onInput(event: InputEvent) {
+    this.$emit('table:input', $(event.target as HTMLInputElement));
+  }
+
+  selectCell($cell: DomType) {
+    this.selection?.select($cell);
+    this.$emit('table:select', $cell);
   }
 }
