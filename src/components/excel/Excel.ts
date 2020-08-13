@@ -5,6 +5,7 @@ type ComponentType = any; // typeof ExcelComponent & { className: string };
 
 type ExcelOptions = {
   components: Array<ComponentType>;
+  store?: { [k: string]: any };
 };
 
 export class Excel {
