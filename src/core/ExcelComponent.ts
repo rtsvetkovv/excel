@@ -1,17 +1,21 @@
 import { DomListener } from 'core/DomListener';
 import { DomType } from 'core/dom';
 import { Emitter } from './Emitter';
+import { Store } from './store/createStore';
 
-type Options = { name?: string; listeners?: Array<string>; emitter?: Emitter };
+type Options = { name?: string; listeners?: Array<string>; emitter?: Emitter; store?: Store };
 
 export class ExcelComponent extends DomListener {
   public emitter?: Emitter;
+  public store: Store;
   private unsubscribers: Array<Function> = [];
+  private storeSub?: { unsubscribe: Function };
 
   constructor($root: DomType, options: Options = {}) {
     super($root, options.listeners);
     this.name = options.name ?? '';
     this.emitter = options.emitter;
+    this.store = options.store!;
 
     this.prepare();
   }
@@ -33,6 +37,14 @@ export class ExcelComponent extends DomListener {
     this.unsubscribers.push(unsubscribeFn);
   }
 
+  $dispatch(action: { type: string; payload?: any }) {
+    this.store.dispatch(action);
+  }
+
+  $subscribe(fn: Function) {
+    this.storeSub = this.store.subscribe(fn);
+  }
+
   init() {
     this.initDOMListeners();
   }
@@ -40,5 +52,6 @@ export class ExcelComponent extends DomListener {
   destroy() {
     this.removeDOMListeners();
     this.unsubscribers.forEach((unsubscribeFn) => unsubscribeFn());
+    this.storeSub?.unsubscribe();
   }
 }

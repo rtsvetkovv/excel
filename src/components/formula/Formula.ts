@@ -24,6 +24,10 @@ export class Formula extends ExcelComponent {
     this.$on('table:input', ($cell: DomType) => {
       this.$formula!.text($cell.text());
     });
+
+    this.$subscribe((state: any) => {
+      console.log('Formula state, ', state);
+    });
   }
 
   toHTML() {

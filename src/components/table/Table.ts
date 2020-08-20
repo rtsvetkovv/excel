@@ -41,15 +41,28 @@ export class Table extends ExcelComponent {
     this.$on('formula:done', () => {
       this.selection?.current?.focus();
     });
+
+    this.$subscribe((state: any) => {
+      console.log('Table state, ', state);
+    });
   }
 
   toHTML() {
     return createTable(20);
   }
 
+  async handleResize(event: MouseEvent) {
+    try {
+      const data = await handleResize(this.$root, event);
+      this.$dispatch({ type: 'TABLE_RESIZE', payload: data });
+    } catch (error) {
+      console.warn(error.message);
+    }
+  }
+
   onMousedown(event: MouseEvent) {
     if (shouldResize(event)) {
-      handleResize(this.$root, event);
+      this.handleResize(event);
     }
 
     this.$emit('table:select', $(event.target as HTMLElement));
@@ -73,7 +86,7 @@ export class Table extends ExcelComponent {
 
       this.selection?.selectGroup($cells);
     } else {
-      this.selection?.select($cell);
+      this.selectCell($cell);
     }
   }
 

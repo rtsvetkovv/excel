@@ -61,6 +61,7 @@ const config = {
     alias: {
       components: path.resolve(__dirname, './src/components'),
       core: path.resolve(__dirname, './src/core'),
+      store: path.resolve(__dirname, './src/store'),
     },
   },
 };
