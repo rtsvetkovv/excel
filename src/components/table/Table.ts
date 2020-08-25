@@ -4,6 +4,7 @@ import { createTable } from './table.template';
 import { handleResize } from './table.resize';
 import { shouldResize, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
+import { ExcelOptions } from 'index';
 
 export type Coordinates = {
   col: number;
@@ -14,7 +15,7 @@ export class Table extends ExcelComponent {
   static className = 'excel__table';
   selection?: TableSelection;
 
-  constructor($root: DomType, options: any) {
+  constructor($root: DomType, options: ExcelOptions) {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'click', 'keydown', 'input'],

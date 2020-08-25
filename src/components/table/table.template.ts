@@ -33,7 +33,7 @@ function createRow(content: string, index?: number) {
   `;
 }
 
-function toChar(_: any, index: number) {
+function toChar(_: string, index: number) {
   const charCode = CODES.A + index;
   return String.fromCharCode(charCode);
 }

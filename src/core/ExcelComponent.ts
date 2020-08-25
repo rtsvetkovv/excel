@@ -2,8 +2,7 @@ import { DomListener } from 'core/DomListener';
 import { DomType } from 'core/dom';
 import { Emitter } from './Emitter';
 import { Store } from './store/createStore';
-
-type Options = { name?: string; listeners?: Array<string>; emitter?: Emitter; store?: Store };
+import { ExcelOptions } from 'index';
 
 export class ExcelComponent extends DomListener {
   public emitter?: Emitter;
@@ -11,11 +10,11 @@ export class ExcelComponent extends DomListener {
   private unsubscribers: Array<Function> = [];
   private storeSub?: { unsubscribe: Function };
 
-  constructor($root: DomType, options: Options = {}) {
+  constructor($root: DomType, options: ExcelOptions) {
     super($root, options.listeners);
     this.name = options.name ?? '';
     this.emitter = options.emitter;
-    this.store = options.store!;
+    this.store = options.store;
 
     this.prepare();
   }

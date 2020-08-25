@@ -1,4 +1,6 @@
-export const rootReducer = (state: any, action: { type: string; payload?: any }) => {
+import { State, Action } from 'core/store';
+
+export const rootReducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'TABLE_RESIZE':
       return {

@@ -1,11 +1,13 @@
 import { ExcelComponent } from 'core/ExcelComponent';
 import { DomType, $ } from 'core/dom';
+import { ExcelOptions } from 'index';
+import { State } from 'core/store';
 
 export class Formula extends ExcelComponent {
   static className = 'excel__formula';
   $formula?: DomType;
 
-  constructor($root: DomType, options: any) {
+  constructor($root: DomType, options: ExcelOptions) {
     super($root, {
       name: 'Formula',
       listeners: ['input', 'keydown'],
@@ -25,7 +27,7 @@ export class Formula extends ExcelComponent {
       this.$formula!.text($cell.text());
     });
 
-    this.$subscribe((state: any) => {
+    this.$subscribe((state: State) => {
       console.log('Formula state, ', state);
     });
   }

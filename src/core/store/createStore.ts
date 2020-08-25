@@ -1,12 +1,14 @@
+import { State, Reducer, Action } from '.';
+
 export class Store {
-  private state: any;
+  private state: State;
   private listeners: Array<Function> = [];
 
-  constructor(private rootReducer: any, initialState?: any) {
+  constructor(private rootReducer: Reducer, initialState?: State) {
     this.state = rootReducer({ ...initialState }, { type: '__INIT__' });
   }
 
-  public subscribe(fn: any) {
+  public subscribe(fn: Function) {
     this.listeners.push(fn);
 
     return {
@@ -17,7 +19,7 @@ export class Store {
     this.listeners = this.listeners.filter((listener) => listener !== fn);
   }
 
-  public dispatch(action: any) {
+  public dispatch(action: Action) {
     this.state = this.rootReducer(this.state, action);
     this.listeners.forEach((listener) => listener(this.state));
   }
@@ -26,28 +28,3 @@ export class Store {
     return { ...this.state };
   }
 }
-// export function createStore(rootReducer: any, initialState?: any) {
-//   let state = rootReducer({ ...initialState }, { type: '__INIT__' });
-//   let listeners: Array<Function> = [];
-
-//   return {
-//     subscribe(fn: any) {
-//       listeners.push(fn);
-
-//       return {
-//         unsubscribe() {
-//           listeners = listeners.filter((listener) => listener !== fn);
-//         },
-//       };
-//     },
-
-//     dispatch(action: any) {
-//       state = rootReducer(state, action);
-//       listeners.forEach((listener) => listener(state));
-//     },
-
-//     getState() {
-//       return { ...state };
-//     },
-//   };
-// }

@@ -7,6 +7,17 @@ import { Store } from 'core/store/createStore';
 import { rootReducer } from 'store/rootReducer';
 
 import './scss/index.scss';
+import { Emitter } from 'core/Emitter';
+
+export type ComponentType = any; // typeof ExcelComponent & { className: string };
+
+export type ExcelOptions = {
+  components: Array<ComponentType>;
+  store: Store;
+  name?: string;
+  listeners?: Array<string>;
+  emitter?: Emitter;
+};
 
 const store = new Store(rootReducer, {
   tableTitle: 'My table',

@@ -1,13 +1,7 @@
 import { $, DomType, SelectorType } from 'core/dom';
 import { Emitter } from 'core/Emitter';
 import { Store } from 'core/store/createStore';
-
-type ComponentType = any; // typeof ExcelComponent & { className: string };
-
-type ExcelOptions = {
-  components: Array<ComponentType>;
-  store: Store;
-};
+import { ComponentType, ExcelOptions } from 'index';
 
 export class Excel {
   private $el: DomType;
