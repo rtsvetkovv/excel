@@ -46,7 +46,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20);
+    return createTable(20, this.store.getState());
   }
 
   async handleResize(event: MouseEvent) {
@@ -76,9 +76,14 @@ export class Table extends ExcelComponent {
 
     if (event.shiftKey) {
       const targetCoordinates = $(event.target).coords(true) as Coordinates;
-      const currentCoordinates = this.selection?.current?.coords(true) as Coordinates;
+      const currentCoordinates = this.selection?.current?.coords(
+        true
+      ) as Coordinates;
 
-      const $cells = matrix(targetCoordinates, currentCoordinates).map((coordinate) =>
+      const $cells = matrix(
+        targetCoordinates,
+        currentCoordinates
+      ).map((coordinate) =>
         this.$root.find(`[data-coords="${coordinate}"]`)
       ) as Array<DomType>;
 
@@ -89,7 +94,14 @@ export class Table extends ExcelComponent {
   }
 
   onKeydown(event: KeyboardEvent) {
-    const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp'];
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowDown',
+      'ArrowUp',
+    ];
 
     const { key, shiftKey } = event;
 

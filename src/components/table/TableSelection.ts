@@ -2,7 +2,10 @@ import { DomType } from 'core/dom';
 
 export class TableSelection {
   static className = 'selected';
-  constructor(private group: Array<DomType> = [], public current: DomType | null = null) {}
+  constructor(
+    private group: Array<DomType> = [],
+    public current: DomType | null = null
+  ) {}
 
   select($element: DomType) {
     this.clear();

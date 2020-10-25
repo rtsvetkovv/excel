@@ -11,7 +11,10 @@ export const range = (start: number, end: number) => {
   return new Array(end - start + 1).fill('').map((_, index) => start + index);
 };
 
-export const matrix = (targetCoordinates: Coordinates, currentCoordinates: Coordinates) => {
+export const matrix = (
+  targetCoordinates: Coordinates,
+  currentCoordinates: Coordinates
+) => {
   const cols = range(currentCoordinates.col, targetCoordinates.col);
   const rows = range(currentCoordinates.row, targetCoordinates.row);
 

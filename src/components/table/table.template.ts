@@ -3,15 +3,37 @@ const CODES = {
   Z: 90,
 };
 
-function toCell(row: number) {
-  return (_: string, index: number) => `
-    <div class="cell" contenteditable data-collindex="${index}" data-coords="${row}:${index}"></div>
-  `;
+const getWidth = (tableState: any, index: any) =>
+  `${tableState?.colState ? tableState.colState[index] : 120}px`;
+
+function setColumnWidth(tableState: any) {
+  return (element: string, index: number) => {
+    const width = getWidth(tableState, index);
+
+    return toColumn(element, index, width);
+  };
 }
 
-function toColumn(element: string, index: number) {
+function toCell(row: number, tableState: any) {
+  return (_: string, index: number) => {
+    const width = getWidth(tableState, index);
+
+    return `
+    <div
+      class="cell"
+      contenteditable
+      data-collindex="${index}"
+      data-coords="${row}:${index}"
+      style="width: ${width}"
+    >
+    </div>
+  `;
+  };
+}
+
+function toColumn(element: string, index: number, width: string) {
   return `
-    <div class="column" data-type="resizable" data-index="${index}">
+    <div class="column" data-type="resizable" data-index="${index}" style="width: ${width}">
       ${element}
       <div class="column-resize" data-resize="col"></div>
     </div>
@@ -20,7 +42,9 @@ function toColumn(element: string, index: number) {
 
 function createRow(content: string, index?: number) {
   const rowIndex = index ?? '';
-  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
+  const resize = index
+    ? '<div class="row-resize" data-resize="row"></div>'
+    : '';
 
   return `
     <div class="row" data-type="resizable">
@@ -38,15 +62,22 @@ function toChar(_: string, index: number) {
   return String.fromCharCode(charCode);
 }
 
-export function createTable(rowsCount: number = 10) {
+export function createTable(rowsCount: number = 10, tableState = {}) {
   const colsCount = CODES.Z - CODES.A + 1;
   const rows = [];
-  const cols = new Array(colsCount).fill('').map(toChar).map(toColumn).join('');
+  const cols = new Array(colsCount)
+    .fill('')
+    .map(toChar)
+    .map(setColumnWidth(tableState))
+    .join('');
 
   rows.push(createRow(cols));
 
   for (let row = 0; row < rowsCount; row++) {
-    const cells = new Array(colsCount).fill('').map(toCell(row)).join('');
+    const cells = new Array(colsCount)
+      .fill('')
+      .map(toCell(row, tableState))
+      .join('');
     rows.push(createRow(cells, row + 1));
   }
 

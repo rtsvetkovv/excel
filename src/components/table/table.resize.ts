@@ -1,6 +1,9 @@
 import { DomType, $ } from 'core/dom';
 
-export const handleResize = ($root: DomType, event: MouseEvent): Promise<object> => {
+export const handleResize = (
+  $root: DomType,
+  event: MouseEvent
+): Promise<object> => {
   return new Promise((resolve) => {
     if (!(event.target instanceof HTMLElement)) return;
 
@@ -51,7 +54,9 @@ export const handleResize = ($root: DomType, event: MouseEvent): Promise<object>
         $parent.css({ width: `${value}px` });
 
         const index = $parent.data?.index;
-        const cells = $root.findAll(`[data-collindex="${index}"]`) as NodeListOf<HTMLElement>;
+        const cells = $root.findAll(
+          `[data-collindex="${index}"]`
+        ) as NodeListOf<HTMLElement>;
 
         cells.forEach((cell) => {
           if (!(cell instanceof HTMLElement)) return;

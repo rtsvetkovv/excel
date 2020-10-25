@@ -19,7 +19,9 @@ export class DomListener {
       const methodName = getMethodName(eventName);
       let method = (this as any)[methodName];
       if (!method) {
-        throw new Error(`Method ${methodName} is not implemented in ${this.name} component`);
+        throw new Error(
+          `Method ${methodName} is not implemented in ${this.name} component`
+        );
       }
       const listener = (method = (this as any)[methodName].bind(this));
 
