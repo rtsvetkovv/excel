@@ -8,6 +8,8 @@ import { rootReducer } from 'store/rootReducer';
 
 import './scss/index.scss';
 import { Emitter } from 'core/Emitter';
+import { RootState } from './core/store';
+import { storage } from './core/utils';
 
 export type ComponentType = any; // typeof ExcelComponent & { className: string };
 
@@ -19,8 +21,13 @@ export type ExcelOptions = {
   emitter?: Emitter;
 };
 
-const store = new Store(rootReducer, {
-  tableTitle: 'My table',
+const savedData = storage('excel-state');
+
+const store = new Store(rootReducer, savedData);
+
+store.subscribe((state: RootState) => {
+  console.log('App State: ', state);
+  storage('excel-state', state);
 });
 
 const excel = new Excel('#app', {

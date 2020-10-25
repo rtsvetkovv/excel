@@ -1,7 +1,6 @@
 import { ExcelComponent } from 'core/ExcelComponent';
 import { DomType, $ } from 'core/dom';
 import { ExcelOptions } from 'index';
-import { State } from 'core/store';
 
 export class Formula extends ExcelComponent {
   static className = 'excel__formula';
@@ -25,10 +24,6 @@ export class Formula extends ExcelComponent {
 
     this.$on('table:input', ($cell: DomType) => {
       this.$formula!.text($cell.text());
-    });
-
-    this.$subscribe((state: State) => {
-      console.log('Formula state, ', state);
     });
   }
 

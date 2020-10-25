@@ -1,4 +1,5 @@
 import { DomType, $ } from 'core/dom';
+import * as actions from 'store/actions';
 import { ExcelComponent } from 'core/ExcelComponent';
 import { createTable } from './table.template';
 import { handleResize } from './table.resize';
@@ -42,10 +43,6 @@ export class Table extends ExcelComponent {
     this.$on('formula:done', () => {
       this.selection?.current?.focus();
     });
-
-    this.$subscribe((state: any) => {
-      console.log('Table state, ', state);
-    });
   }
 
   toHTML() {
@@ -55,7 +52,7 @@ export class Table extends ExcelComponent {
   async handleResize(event: MouseEvent) {
     try {
       const data = await handleResize(this.$root, event);
-      this.$dispatch({ type: 'TABLE_RESIZE', payload: data });
+      this.$dispatch(actions.tableResize(data));
     } catch (error) {
       console.warn(error.message);
     }

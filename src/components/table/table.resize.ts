@@ -1,6 +1,6 @@
 import { DomType, $ } from 'core/dom';
 
-export const handleResize = ($root: DomType, event: MouseEvent) => {
+export const handleResize = ($root: DomType, event: MouseEvent): Promise<object> => {
   return new Promise((resolve) => {
     if (!(event.target instanceof HTMLElement)) return;
 

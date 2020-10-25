@@ -1,10 +1,10 @@
-import { State, Reducer, Action } from '.';
+import { RootState, Reducer, Action } from '.';
 
 export class Store {
-  private state: State;
+  private state: RootState;
   private listeners: Array<Function> = [];
 
-  constructor(private rootReducer: Reducer, initialState?: State) {
+  constructor(private rootReducer: Reducer, initialState?: RootState) {
     this.state = rootReducer({ ...initialState }, { type: '__INIT__' });
   }
 
@@ -15,6 +15,7 @@ export class Store {
       unsubscribe: this.unsubscribe.bind(this, fn),
     };
   }
+
   private unsubscribe(fn: Function) {
     this.listeners = this.listeners.filter((listener) => listener !== fn);
   }

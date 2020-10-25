@@ -1,6 +1,12 @@
-import { State, Action } from 'core/store';
+import { Action } from 'core/store';
+type State = { [key: string]: any };
 
-export const rootReducer = (state: State, action: Action) => {
+const initialState = {
+  tableTitle: '',
+  colState: {},
+};
+
+export const rootReducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case 'TABLE_RESIZE':
       return {
