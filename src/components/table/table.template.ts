@@ -40,14 +40,18 @@ function toColumn(element: string, index: number, width: string) {
   `;
 }
 
-function createRow(content: string, index?: number) {
+function createRow(content: string, index?: number, tableState: any = {}) {
   const rowIndex = index ?? '';
   const resize = index
     ? '<div class="row-resize" data-resize="row"></div>'
     : '';
 
+  const height = `${
+    tableState?.rowState ? tableState?.rowState[index!] : 24
+  }px`;
+
   return `
-    <div class="row" data-type="resizable">
+    <div class="row" data-type="resizable" data-row="${index}" style="height: ${height}">
       <div class="row-info">
         ${rowIndex}
         ${resize}
@@ -78,7 +82,7 @@ export function createTable(rowsCount: number = 10, tableState = {}) {
       .fill('')
       .map(toCell(row, tableState))
       .join('');
-    rows.push(createRow(cells, row + 1));
+    rows.push(createRow(cells, row + 1, tableState));
   }
 
   return rows.join('');

@@ -3,7 +3,7 @@ import { DomType, $ } from 'core/dom';
 export const handleResize = (
   $root: DomType,
   event: MouseEvent
-): Promise<object> => {
+): Promise<{ type: string; value: number; id: string | undefined }> => {
   return new Promise((resolve) => {
     if (!(event.target instanceof HTMLElement)) return;
 
@@ -68,7 +68,8 @@ export const handleResize = (
 
       resolve({
         value,
-        id: type === 'col' ? $parent.data!.index : null,
+        type,
+        id: type === 'col' ? $parent.data!.index : $parent.data!.row,
       });
 
       $resizer.css({

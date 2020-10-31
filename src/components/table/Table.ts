@@ -52,6 +52,7 @@ export class Table extends ExcelComponent {
   async handleResize(event: MouseEvent) {
     try {
       const data = await handleResize(this.$root, event);
+      console.log('data', data);
       this.$dispatch(actions.tableResize(data));
     } catch (error) {
       console.warn(error.message);

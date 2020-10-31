@@ -9,10 +9,12 @@ const initialState = {
 export const rootReducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case 'TABLE_RESIZE':
+      const field = action.payload.type === 'row' ? 'rowState' : 'colState';
+
       return {
         ...state,
-        colState: {
-          ...state?.colState,
+        [field]: {
+          ...state?.[field],
           [action.payload.id]: action.payload.value,
         },
       };
